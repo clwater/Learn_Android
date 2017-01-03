@@ -14,4 +14,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="light"
+        android:id="@+id/light"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="night"
+        android:layout_below="@id/light"
+        android:id="@+id/night"/>
 </RelativeLayout>
