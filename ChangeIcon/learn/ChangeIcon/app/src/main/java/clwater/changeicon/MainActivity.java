@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         BitmapDrawable d = (BitmapDrawable) res.getDrawable(R.drawable.s11);
         Bitmap img = d.getBitmap();
 
-        String fn = "ic.png";
+        String fn = "s13.jpeg";
         String path = this.getFilesDir() + File.separator + fn;
         Log.d("TAG" , path);
         try{

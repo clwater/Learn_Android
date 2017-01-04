@@ -21,7 +21,7 @@
         <activity-alias
             android:name=".Test1"
             android:enabled="false"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@drawable/s13"
             android:label="11"
             android:targetActivity=".MainActivity">
             <intent-filter>
