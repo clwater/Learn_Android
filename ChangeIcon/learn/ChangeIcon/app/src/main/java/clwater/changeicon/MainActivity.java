@@ -97,28 +97,18 @@ public class MainActivity extends AppCompatActivity {
         String path = this.getFilesDir() + File.separator + fn;
         Bitmap bit = BitmapFactory.decodeFile(path);
 
-        BitmapDrawable bd= new BitmapDrawable(bit);
-
-        // 快捷图片
-       // Parcelable icon = Intent.ShortcutIconResource.fromContext(this.getApplicationContext(),   R.drawable.s11);
-
-        shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON, BitmapFactory.decodeResource(getResources(), R.drawable.testnnn));
-        //shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
-
+        shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON, bit);
 
         // 点击快捷图片，运行的程序主入口
         shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_INTENT,
                 new Intent(this.getApplicationContext(), this.getClass()));
         // 发送广播
         this.sendBroadcast(shortcutintent);
-
-
-
     }
 
     private void saveFile() {
         Resources res = this.getResources();
-        BitmapDrawable d = (BitmapDrawable) res.getDrawable(R.drawable.testbase);
+        BitmapDrawable d = (BitmapDrawable) res.getDrawable(R.drawable.testmmm);
         Bitmap img = d.getBitmap();
 
         String fn = "testQuick.png";
