@@ -111,11 +111,11 @@ public class MainActivity extends AppCompatActivity {
             Paint paint = new Paint();
             paint.setColor(Color.RED);
 
-            canvas.drawBitmap(bit , 0 ,  0  ,null);
+            canvas.drawBitmap(bit , 200 ,  200  ,null);
 
-            canvas.drawCircle(_width - bWidth , bHeight , textHeight  , paint);
-            
-            canvas.drawText("9", _width - bWidth , textY ,  textPaint);
+            canvas.drawCircle(200 + _width  , 200 +bHeight , textHeight / 4 * 3  , paint);
+
+            canvas.drawText("9", 200 + _width  , 200 + textY ,  textPaint);
 
 
 
