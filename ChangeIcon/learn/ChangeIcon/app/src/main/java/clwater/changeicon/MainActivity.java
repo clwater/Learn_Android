@@ -2,15 +2,20 @@ package clwater.changeicon;
 
 
 import android.content.ComponentName;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -64,15 +69,59 @@ public class MainActivity extends AppCompatActivity {
 
 
         
-        saveFile();
+       saveFile();
+        showImage();
+        createQuick();
+
+
+
+    }
+
+    private void showImage() {
+        String fn = "testQuick.png";
+        String path = this.getFilesDir() + File.separator + fn;
+        ImageView iv = (ImageView) findViewById(R.id.image);
+        Bitmap bit = BitmapFactory.decodeFile(path);
+        iv.setImageBitmap(bit);
+    }
+
+    private void createQuick() {
+        Intent shortcutintent = new Intent(
+                "com.android.launcher.action.INSTALL_SHORTCUT");
+        // 不允许重复创建
+        shortcutintent.putExtra("duplicate", false);
+        // 需要现实的名称
+        shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_NAME,
+                "TestQuck");
+        String fn = "testQuick.png";
+        String path = this.getFilesDir() + File.separator + fn;
+        Bitmap bit = BitmapFactory.decodeFile(path);
+
+        BitmapDrawable bd= new BitmapDrawable(bit);
+
+        // 快捷图片
+       // Parcelable icon = Intent.ShortcutIconResource.fromContext(this.getApplicationContext(),   R.drawable.s11);
+
+        shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON, BitmapFactory.decodeResource(getResources(), R.drawable.testnnn));
+        //shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
+
+
+        // 点击快捷图片，运行的程序主入口
+        shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_INTENT,
+                new Intent(this.getApplicationContext(), this.getClass()));
+        // 发送广播
+        this.sendBroadcast(shortcutintent);
+
+
+
     }
 
     private void saveFile() {
         Resources res = this.getResources();
-        BitmapDrawable d = (BitmapDrawable) res.getDrawable(R.drawable.s11);
+        BitmapDrawable d = (BitmapDrawable) res.getDrawable(R.drawable.testbase);
         Bitmap img = d.getBitmap();
 
-        String fn = "s13.jpeg";
+        String fn = "testQuick.png";
         String path = this.getFilesDir() + File.separator + fn;
         Log.d("TAG" , path);
         try{
