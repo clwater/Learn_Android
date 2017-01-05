@@ -113,13 +113,11 @@ public class MainActivity extends AppCompatActivity {
 
         String fn = "testQuick.png";
         String path = this.getFilesDir() + File.separator + fn;
-        Log.d("TAG" , path);
         try{
             OutputStream os = new FileOutputStream(path);
             img.compress(Bitmap.CompressFormat.PNG, 100, os);
             os.close();
         }catch(Exception e){
-            Log.e("TAG", "", e);
         }
     }
 
