@@ -8,10 +8,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -79,34 +82,40 @@ public class MainActivity extends AppCompatActivity {
         protected void onDraw(Canvas canvas) {
             //canvas.drawCircle(100, 100, 90, paint);
 
-            Paint textPaint = new Paint();
-            textPaint.setColor(Color.BLACK);
-            textPaint.setTextSize(30);
-/**
- * 设置绘制文字时起始点X坐标的位置
- * CENTER:以文字的宽度的中心点为起始点向两边绘制
- * LEFT:以文字左边为起始点向右边开始绘制
- * RIGHT:以文字宽度的右边为起始点向左边绘制
- */
-            textPaint.setTextAlign(Paint.Align.CENTER);
-
-//获取文字度量信息
-            Paint.FontMetrics fm = textPaint.getFontMetrics();
-            float textHeight = fm.descent-fm.ascent;
-
-//绘制文字的矩形框范围
-            Paint paint = new Paint();
-            paint.setColor(Color.YELLOW);
-
-
             String fn = "testQuick.png";
             String path = getContext().getFilesDir() + File.separator + fn;
             Bitmap bit = BitmapFactory.decodeFile(path);
 
-            canvas.drawBitmap(bit , 0 , 0 ,null);
 
-            canvas.drawCircle(100 , 100 , textHeight , paint);
-            canvas.drawText("11", 100 ,100,  textPaint);
+            float _height = bit.getHeight();
+            float _width = bit.getWidth();
+
+            float bHeight = _height / 8 ;
+            float bWidth = _width / 8;
+
+
+
+            Typeface font = Typeface.create("宋体", Typeface.BOLD);
+
+            Paint textPaint = new Paint();
+            textPaint.setColor(Color.WHITE);
+            textPaint.setTextSize((float) (_height * 0.2));
+            textPaint.setTextAlign(Paint.Align.CENTER);
+            textPaint.setTypeface(font);
+
+            Paint.FontMetrics fm = textPaint.getFontMetrics();
+            float textHeight = fm.descent-fm.ascent;
+
+            float textY = bHeight + (fm.descent - fm.ascent) / 2 - fm.descent;
+
+            Paint paint = new Paint();
+            paint.setColor(Color.RED);
+
+            canvas.drawBitmap(bit , 0 ,  0  ,null);
+
+            canvas.drawCircle(_width - bWidth , bHeight , textHeight  , paint);
+            
+            canvas.drawText("9", _width - bWidth , textY ,  textPaint);
 
 
 
