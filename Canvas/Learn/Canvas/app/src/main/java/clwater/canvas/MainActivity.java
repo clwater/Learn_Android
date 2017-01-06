@@ -1,6 +1,7 @@
 package clwater.canvas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +13,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,8 +22,11 @@ import android.view.View;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+
+import static android.R.attr.path;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         image();
         setContentView(new CustomView1(this));
 
-        //createBit();
+        createBit();
     }
 
     private void image() {
@@ -53,8 +59,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createBit() {
-        Bitmap b = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(b);
+        Bitmap bm = Bitmap.createBitmap(320, 480, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bm);
+        Paint p = new Paint();
+        canvas.drawRect(50, 50, 200, 200, p);
+        canvas.save(Canvas.ALL_SAVE_FLAG );
+        canvas.restore();
+
+        File f = new File("/sdcard/0.png");
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(f);
+            bm.compress(Bitmap.CompressFormat.PNG, 50, fos);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        // 其次把文件插入到系统图库
+        try {
+            MediaStore.Images.Media.insertImage(getBaseContext().getContentResolver(),
+                    f.getAbsolutePath(), "testX", null);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // 最后通知图库更新
 
     }
 
@@ -66,21 +94,18 @@ public class MainActivity extends AppCompatActivity {
      */
     class CustomView1 extends View {
 
-        Paint paint;
 
         public CustomView1(Context context) {
             super(context);
-            paint = new Paint(); //设置一个笔刷大小是3的黄色的画笔
-            paint.setColor(Color.YELLOW);
-            paint.setStrokeJoin(Paint.Join.ROUND);
-            paint.setStrokeCap(Paint.Cap.ROUND);
-            paint.setStrokeWidth(1);
+
         }
 
         //在这里我们将测试canvas提供的绘制图形方法
         @Override
         protected void onDraw(Canvas canvas) {
-            //canvas.drawCircle(100, 100, 90, paint);
+
+            Bitmap b = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+
 
             String fn = "testQuick.png";
             String path = getContext().getFilesDir() + File.separator + fn;
@@ -116,20 +141,41 @@ public class MainActivity extends AppCompatActivity {
            // canvas.drawCircle(200 + _width  , 200 +bHeight - bHeight / 2 , textHeight / 4 * 3  , paint);
 
 
+            String  num = "6";
+
+            int numLengh = num.length() - 1;
+
+            if (numLengh >= 4){
+
+                num = num.substring(0 ,1) + "..." + num.substring(num.length() - 3 , num.length());
+
+                numLengh = 4;
+            }
+
 
 
             float _size = (float) 1.3;
             float _dsize = textHeight * _size;
-            RectF rect = new RectF(0 , 0, _dsize, _dsize);
-            rect.offset(200 + _width  - _dsize / 2 , 200 - _dsize / 2);
-            canvas.drawArc(rect, 90, 180, true, paint);
-            canvas.drawArc(rect, -90, 180, true, paint);
+            float _dJsize = _dsize / 3 * numLengh;
+
+            RectF rectL = new RectF(0 , 0, _dsize, _dsize);
+            RectF rectR = new RectF(0 , 0, _dsize, _dsize);
+            rectL.offset(200 + _width  - _dsize / 2  - _dJsize + 1 , 200 - _dsize / 2);
+            rectR.offset(200 + _width  - _dsize / 2  , 200 - _dsize / 2);
+            canvas.drawArc(rectL, 90, 180, true, paint);
+            paint.setColor(Color.RED);
+            canvas.drawArc(rectR, -90, 180, true, paint);
+
+            paint.setColor(Color.RED);
+            RectF r = new RectF(0 , 0 , _dJsize , _dsize + 1);
+            r.offset(200 + _width  -  _dJsize , 200 - _dsize / 2);
+            canvas.drawRect(r ,  paint);
 
 
-            String  num = "6";
-            canvas.drawText(num , 200 + _width  , 200 + textY - bHeight,  textPaint);
 
-            Log.d("gzb"  , "" + num.length());
+            canvas.drawText(num , 200 + _width - _dJsize / 2 , 200 + textY - bHeight,  textPaint);
+
+
         }
 
     }
