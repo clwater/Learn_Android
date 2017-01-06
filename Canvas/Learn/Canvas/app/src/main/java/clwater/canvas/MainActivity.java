@@ -99,28 +99,37 @@ public class MainActivity extends AppCompatActivity {
 
             Paint textPaint = new Paint();
             textPaint.setColor(Color.WHITE);
-            textPaint.setTextSize((float) (_height * 0.2));
+            textPaint.setTextSize((float) (_height * 0.25));
             textPaint.setTextAlign(Paint.Align.CENTER);
             textPaint.setTypeface(font);
 
             Paint.FontMetrics fm = textPaint.getFontMetrics();
             float textHeight = fm.descent-fm.ascent;
 
-            float textY = bHeight + (fm.descent - fm.ascent) / 2 - fm.descent;
+            float textY =  bHeight  + (fm.descent - fm.ascent) / 2 - fm.descent;
 
             Paint paint = new Paint();
             paint.setColor(Color.RED);
 
             canvas.drawBitmap(bit , 200 ,  200  ,null);
 
-            canvas.drawCircle(200 + _width  , 200 +bHeight , textHeight / 4 * 3  , paint);
-
-            canvas.drawText("9", 200 + _width  , 200 + textY ,  textPaint);
+           // canvas.drawCircle(200 + _width  , 200 +bHeight - bHeight / 2 , textHeight / 4 * 3  , paint);
 
 
 
 
+            float _size = (float) 1.3;
+            float _dsize = textHeight * _size;
+            RectF rect = new RectF(0 , 0, _dsize, _dsize);
+            rect.offset(200 + _width  - _dsize / 2 , 200 - _dsize / 2);
+            canvas.drawArc(rect, 90, 180, true, paint);
+            canvas.drawArc(rect, -90, 180, true, paint);
 
+
+            String  num = "6";
+            canvas.drawText(num , 200 + _width  , 200 + textY - bHeight,  textPaint);
+
+            Log.d("gzb"  , "" + num.length());
         }
 
     }
