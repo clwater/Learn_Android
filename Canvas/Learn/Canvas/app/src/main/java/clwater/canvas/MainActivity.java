@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         float textY =  bHeight  + (fm.descent - fm.ascent) / 2 - fm.descent;
 
 
-        String  num = "1234567";
+        String  num = "11";
 
         int numLengh = num.length() - 1;
 
@@ -103,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        Bitmap bm = Bitmap.createBitmap((int) (_width * 1.25), (int) (_height * 1.25), Bitmap.Config.ARGB_8888);
+        //Bitmap bm = Bitmap.createBitmap((int) (_width * 1.5), (int) (_height * 1.25), Bitmap.Config.ARGB_8888);
+        Bitmap bm = Bitmap.createBitmap((int) (_width + _dsize), (int) (_height + _dsize), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bm);
 
 
@@ -155,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 new Intent(this.getApplicationContext(), this.getClass()));
         // 发送广播
         this.sendBroadcast(shortcutintent);
-    
+
 
 
 
